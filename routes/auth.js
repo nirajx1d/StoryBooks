@@ -5,8 +5,13 @@ const passport = require('passport');
 router.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}));
 
 router.get('/google/callback', 
-    passport.authenticate('google', {failureRedirect: '/'}), (req, res) => {
-        res.redirect('/dashboard');
+    passport.authenticate('google', {failureRedirect: '/'}), (err, req, res, next) => {
+        if(err.name === 'TokenError') {
+            res.redirect('/auth/google');
+        } else {
+            res.redirect('/dashboard');
+        }
+        
     }
 );
 
