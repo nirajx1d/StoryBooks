@@ -101,4 +101,12 @@ router.put('/:id', (req, res) => {
     });
 });
 
+//Delete story
+router.delete('/:id', (req, res) => {
+    Story.deleteOne({_id: req.params.id})
+        .then(() => {
+            res.redirect('/dashboard');
+        })
+});
+
 module.exports = router;
